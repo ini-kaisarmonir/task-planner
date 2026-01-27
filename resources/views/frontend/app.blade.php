@@ -12,9 +12,9 @@
 
     <!-- Styles / Scripts -->
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @else
-        <link rel="stylesheet" href="https://cdn.tailwindcss.com">
+    <link rel="stylesheet" href="https://cdn.tailwindcss.com">
     @endif
 </head>
 
@@ -28,21 +28,26 @@
 
             <div class="flex justify-end">
                 @auth
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button class="inline-block cursor-pointer hover:opacity-60 px-5 py-1.5 dark:text-[#EDEDEC] hover:border-[#1915014a]  dark:hover:border-[#62605b] text-sm">Logout</button>
-                </form>
-                <a
-                    href="{{ url('/dashboard') }}"
-                    class="inline-block px-5 py-1.5 hover:opacity-60 dark:text-[#EDEDEC] hover:border-[#1915014a]  dark:hover:border-[#62605b] text-sm">
-                    Dashboard
-                </a>
+                    <span class="inline-block py-1.5 text-sm">
+                        {{ auth()->user()->name ?? '' }}  |
+                    </span>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button class="inline-block cursor-pointer hover:opacity-60 px-5 py-1.5 text-sm">Logout</button>
+                    </form>
+                    @can('view-dashboard')
+                    <a
+                        href="{{ url('/dashboard') }}"
+                        class="inline-block px-5 py-1.5 hover:opacity-60 text-sm">
+                        Dashboard
+                    </a>
+                    @endcan
                 @else
-                <a
-                    href="{{ route('login') }}"
-                    class="inline-block px-5 py-1.5 hover:opacity-60 dark:text-[#EDEDEC] hover:border-[#1915014a]  dark:hover:border-[#62605b] text-sm">
-                    Log in
-                </a>
+                    <a
+                        href="{{ route('login') }}"
+                        class="inline-block px-5 py-1.5 hover:opacity-60 text-sm">
+                        Log in
+                    </a>
                 @endauth
             </div>
         </div>

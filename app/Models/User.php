@@ -44,6 +44,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'role' => Role::class,
         ];
     }
 
@@ -65,5 +66,10 @@ class User extends Authenticatable
     public function events()
     {
         return $this->hasMany(Event::class, 'user_id');
+    }
+
+    public function scopeEmployees($query)
+    {
+        return $query->where('role', Role::EMPLOYEE);
     }
 }

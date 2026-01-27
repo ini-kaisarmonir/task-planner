@@ -6,5 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
-    //
+        protected $casts = [
+    'date' => 'datetime',
+];
+
+    public function assignee()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

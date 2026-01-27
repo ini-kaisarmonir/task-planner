@@ -22,6 +22,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Gate::define('admin-only', fn($user) => $user->isAdmin());
 
-        Gate::define('view-dashboard', fn($user) => true);
+        Gate::define('view-dashboard', fn($user) => $user->isAdmin() || $user->isEmployee());
     }
 }
