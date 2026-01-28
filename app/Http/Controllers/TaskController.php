@@ -77,9 +77,19 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $task)
+    public function update(TaskRequest $request, Task $task)
     {
-        //
+        $this->authorize('update', $task);
+
+        try {
+            $this->taskService->updateTask($task, $request->validated());
+
+            return redirect()->route('task.index')
+                ->with('success', 'Task updated successfully!');
+        } catch (Exception $e) {
+            return back()->withInput()
+                ->withErrors(['error' => 'Could not update task. Please try again.']);
+        }
     }
 
     /**
