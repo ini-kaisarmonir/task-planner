@@ -21,7 +21,7 @@ class EventPolicy
      */
     public function view(User $user, Event $event): bool
     {
-        return $user->isAdmin() || $event->user_id === $user->id;
+        return $user->isAdmin() || $user->isEmployee();
     }
 
     /**

@@ -71,7 +71,7 @@
     @else
     <div class="p-6 text-center">
         <p class="text-gray-500 mb-4">No tasks found.</p>
-        @can('create', $task)
+        @can('create', App\Models\Task::class)
         <a href="{{ route('task.create') }}" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200 font-semibold">Create First Task</a>
         @endcan
     </div>

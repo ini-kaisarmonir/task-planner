@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('event_id')->nullable()->constrained('events')->nullOnDelete();
             $table->unsignedTinyInteger('status')->default(Status::PENDING);
             $table->unsignedTinyInteger('priority')->default(Priority::MEDIUM);
             $table->dateTime('due_at');

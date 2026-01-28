@@ -18,14 +18,18 @@ class Task extends Model
     ];
 
     protected $casts = [
-    'priority' => Priority::class,
-    'status' => Status::class,
-    'due_at' => 'datetime',
-];
+        'priority' => Priority::class,
+        'status' => Status::class,
+        'due_at' => 'datetime',
+    ];
 
     public function assignee()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    
+
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
 }

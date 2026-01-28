@@ -22,7 +22,7 @@ class TaskController extends Controller
         $tasks = $this->taskService->getTasksForUser(Auth::user());
 
     
-        return view('admin.task.index', compact('tasks'));
+        return view('admin.tasks.index', compact('tasks'));
     }
 
     /**
@@ -33,7 +33,7 @@ class TaskController extends Controller
         $this->authorize('create', Task::class);
 
         $employees = User::employees()->get();
-        return view('admin.task.create', compact('employees'));
+        return view('admin.tasks.create', compact('employees'));
     }
 
     /**
@@ -61,7 +61,7 @@ class TaskController extends Controller
     {
         $this->authorize('view', $task);
 
-        return view('admin.task.show', compact('task'));
+        return view('admin.tasks.show', compact('task'));
     }
 
     /**
@@ -72,7 +72,7 @@ class TaskController extends Controller
         $this->authorize('update', $task);
 
         $employees = User::employees()->get();
-        return view('admin.task.edit', compact('task', 'employees'));
+        return view('admin.tasks.edit', compact('task', 'employees'));
     }
 
     /**

@@ -11,7 +11,7 @@ class EventRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class EventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name'       => 'required|string|max:255',
+            'date' => 'nullable|date',
+            'start_time' => 'nullable|date_format:H:i',
+            'end_time' => 'nullable|date_format:H:i|after_or_equal:start_time',
+            'tasks' => 'nullable|array',
+            'tasks.*' => 'exists:tasks,id',
         ];
     }
 }

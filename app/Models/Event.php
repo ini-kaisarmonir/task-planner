@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
-        protected $casts = [
-    'date' => 'datetime',
-];
+    protected $casts = [
+        'date' => 'datetime',
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
+    ];
 
-    public function assignee()
+    public function tasks()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->hasMany(Task::class);
     }
 }
