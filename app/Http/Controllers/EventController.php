@@ -20,7 +20,12 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::all();
+        $this->authorize('viewAny', Event::class);
+        try {
+            $events = $this->eventService->getEventsForUser(Auth::user());
+        } catch (Exception $e) {
+            return back()->withErrors(['error' => 'Could not fetch events. Please try again.']);
+        }
 
         return view('admin.events.index', compact('events'));
     }
@@ -30,7 +35,7 @@ class EventController extends Controller
      */
     public function create()
     {
-      //  $this->authorize('create', Event::class);
+        $this->authorize('create', Event::class);
 
         $tasks = Task::all();
         return view('admin.events.create', compact('tasks'));
@@ -41,14 +46,17 @@ class EventController extends Controller
      */
     public function store(EventRequest $request)
     {
-      //  $this->authorize('create', Event::class);
+        $this->authorize('create', Event::class);
 
-       
+        try {
             $this->eventService->storeEvent($request->validated());
 
             return redirect()->route('event.index')
                 ->with('success', 'Event created successfully!');
-      
+        } catch (Exception $e) {
+            return back()->withInput()
+                ->withErrors(['error' => 'Could not create event. Please try again.']);
+        }
     }
 
     /**
@@ -57,8 +65,8 @@ class EventController extends Controller
     public function show(Event $event)
     {
         $this->authorize('view', $event);
-
-        return view('admin.event.show', compact('event'));
+        $event->load('tasks');
+        return view('admin.events.show', compact('event'));
     }
 
     /**
@@ -84,50 +92,27 @@ class EventController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Event $event)
-{
-    $this->authorize('delete', $event);
+    {
+        $this->authorize('delete', $event);
 
-    $event->delete();
-    return redirect()
-        ->route('event.index')
-        ->with('success', 'Task deleted successfully.');
-}
+        $event->delete();
+        return redirect()
+            ->route('event.index')
+            ->with('success', 'Task deleted successfully.');
+    }
 
-public function calendar()
+    public function calendar()
     {
         return view('admin.events.calendar');
     }
 
     public function calendarEvents()
     {
-        $events = Event::all();
-        $tasks = Task::all();
-        
-        $formattedData = [];
-
-        // Format actual Events
-        foreach ($events as $event) {
-            $formattedData[] = [
-                'title' => $event->name,
-                'date' => $event->date,
-                'start' => \Carbon\Carbon::parse($event->date)->format('Y-m-d').'T'.\Carbon\Carbon::parse($event->start_time)->format('H:i:s'),
-                'end'   => \Carbon\Carbon::parse($event->date)->format('Y-m-d').'T'.\Carbon\Carbon::parse($event->end_time)->format('H:i:s'),
-                'color' => '#3788d8',
-                'extendedProps' => ['type' => 'event']
-            ];
+        try {
+            $data = $this->eventService->getCalendarEvents();
+            return response()->json($data);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Could not fetch calendar events.'], 500);
         }
-
-        // Format Tasks as calendar entries
-        foreach ($tasks as $task) {
-            $formattedData[] = [
-                'title' => 'TASK: ' . $task->title,
-                'start' => $task->due_at,
-                'allDay' => false,
-                'color' => '#e67e22',
-                'extendedProps' => ['type' => 'task']
-            ];
-        }
-
-        return response()->json($formattedData);
     }
 }

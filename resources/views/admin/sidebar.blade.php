@@ -9,31 +9,26 @@
 <aside id="sidebar" class="fixed md:static inset-y-0 left-0 w-64 bg-white border-r transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-40">
     <nav class="p-4 space-y-2 text-sm">
         <a href="{{ route('dashboard') }}"
-           class="block px-4 py-2 rounded hover:bg-gray-100 font-medium">
+            class="block px-4 py-2 rounded hover:bg-gray-100 font-medium">
             Dashboard
         </a>
 
-        <a href="{{ route('task.index') }}"
-           class="block px-4 py-2 rounded hover:bg-gray-100">
-            Tasks
-        </a>
-
-        <a href="{{ route('event.index') }}"
-           class="block px-4 py-2 rounded hover:bg-gray-100">
-            Events
-        </a>
-
-        <a href="#"
-           class="block px-4 py-2 rounded hover:bg-gray-100">
+        @can('manage-tasks')
+            <a href="{{ route('task.index') }}"
+                class="block px-4 py-2 rounded hover:bg-gray-100">
+                Tasks
+            </a>
+        @endcan
+        @can('manage-events')
+            <a href="{{ route('event.index') }}"
+                class="block px-4 py-2 rounded hover:bg-gray-100">
+                Events
+            </a>
+        @endcan
+        <a href="{{ route('event.calendar') }}"
+            class="block px-4 py-2 rounded hover:bg-gray-100">
             Calendar
         </a>
-
-        <!-- @can('admin-only')
-            <a href="#"
-               class="block px-4 py-2 rounded hover:bg-gray-100 text-blue-600">
-                Admin Panel
-            </a>
-        @endcan -->
     </nav>
 </aside>
 

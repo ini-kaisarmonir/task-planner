@@ -21,7 +21,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::define('admin-only', fn($user) => $user->isAdmin());
-
         Gate::define('view-dashboard', fn($user) => $user->isAdmin() || $user->isEmployee());
+        Gate::define('manage-tasks', fn($user) => $user->isAdmin() || $user->isEmployee());
+        Gate::define('manage-events', fn($user) => $user->isAdmin() || $user->isEmployee());
     }
 }

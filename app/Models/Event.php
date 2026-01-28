@@ -16,4 +16,19 @@ class Event extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+    public function scopeForUser($query, User $user)
+    {
+        if ($user->isAdmin()) {
+            return $query->with('tasks');
+        }
+
+        return $query
+            ->whereHas('tasks', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })
+            ->with(['tasks' => function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            }]);
+    }
 }

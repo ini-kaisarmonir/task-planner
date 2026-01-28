@@ -32,12 +32,13 @@
                             <td class="px-6 py-4">{{ $event->end_time }}</td>
                             <td class="px-6 py-4 flex gap-2">
                                 <a href="{{ route('event.show', $event->id) }}" class="px-3 py-1 bg-blue-500 text-white rounded text-sm hover:bg-blue-600">View</a>
-                                <a href="{{ route('event.edit', $event->id) }}" class="px-3 py-1 bg-yellow-500 text-white rounded text-sm hover:bg-yellow-600">Edit</a>
+                                @can('delete', $event)
                                 <form action="{{ route('event.destroy', $event->id) }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="px-3 py-1 bg-red-500 text-white rounded text-sm hover:bg-red-600" onclick="return confirm('Are you sure?')">Delete</button>
                                 </form>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach
