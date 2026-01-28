@@ -20,7 +20,6 @@ class TaskController extends Controller
     public function index()
     {
         $tasks = $this->taskService->getTasksForUser(Auth::user());
-
     
         return view('admin.tasks.index', compact('tasks'));
     }

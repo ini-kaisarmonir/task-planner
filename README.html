@@ -1,6 +1,25 @@
-@extends('frontend.app')
 
-@section('content')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Documentation - Technical Assessment</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 900px; margin: 0 auto; padding: 20px; background: #f4f7f6; }
+        .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #2980b9; margin-top: 30px; }
+        code { background: #272822; color: #f8f8f2; padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', Courier, monospace; }
+        pre { background: #272822; color: #f8f8f2; padding: 15px; border-radius: 8px; overflow-x: auto; }
+        .role-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: bold; }
+        .admin { background: #e74c3c; color: white; }
+        .employee { background: #2ecc71; color: white; }
+        ul { padding-left: 20px; }
+    </style>
+</head>
+<body>
+
 <div class="max-w-3xl mx-auto py-12">
     <div class="bg-white rounded-xl shadow p-8 text-center mb-8 border border-gray-100">
         <h1 class="text-3xl font-bold mb-2 text-gray-800">Welcome to the Task Planner & Calendar Application</h1>
@@ -8,10 +27,9 @@
     </div>
 
     <div class="bg-white rounded-lg shadow p-6 border border-gray-100">
-        <h2 class="text-2xl font-semibold mb-4 text-blue-700">Technical Assessment: Task Planner & Calendar</h2>
     
         <h3 class="text-lg font-semibold mt-6 mb-2 text-gray-700">1. Installation Guide</h3>
-        <p class="mb-2 text-gray-600">Follow these steps to get the application running locally:</p>
+        <p class="mb-2 text-gray-600">Follow these steps to run the application</p>
         <pre class="bg-gray-100 rounded p-3 text-sm mb-4 overflow-x-auto">
     # 1. Clone the repository
     git clone https://github.com/ini-kaisarmonir/task-planner.git
@@ -80,4 +98,5 @@
 
     </div>
 </div>
-@endsection
+</body>
+</html>
