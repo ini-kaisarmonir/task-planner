@@ -33,7 +33,7 @@
     # 5. Environment Setup
     Copy the example env file and name it (.env) by running `cp .env.example .env` command (If you use cpanel or other panel copy it manually).
 
-    # 6. Database Setup (Ensure your .env has correct DB credentials)
+    # 6. Database Setup (Ensure your .env has correct DB credentials)(Currently using mysql, you can change it as per your need)
     run `php artisan migrate:fresh --seed` (If you use cpanel or other panel import the `task.sql` (it's in project root) file manually in the database)
     </pre>
 
